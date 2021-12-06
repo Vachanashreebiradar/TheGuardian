@@ -12,9 +12,18 @@ import CoreData
 
 class DBServicesManager {
     
+    // MARK: Initializer
     init() {
        
     }
+    
+    // MARK: DB Services
+    /*
+        1. This will take all the api articles response which is of type Article
+        2. Then it will iterate through the list
+        3. Creates NewsArticle model list
+        4. then saves the changes to context
+    */
     func saveData(articles: [Article], context: NSManagedObjectContext) {
        
         articles.forEach { article in
@@ -40,6 +49,10 @@ class DBServicesManager {
         }
     }
     
+    /*
+        1. This will load all the entries of NewsArticles
+        2. It will fetch using the context
+    */
     func loadDBData(context: NSManagedObjectContext) -> [NewsArticle] {
         
         let fetchRequest: NSFetchRequest<NewsArticle> = NewsArticle.fetchRequest()

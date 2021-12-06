@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9B2E8B6A275D54CD00B5BF53 /* NewsArticleDBRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E8B69275D54CD00B5BF53 /* NewsArticleDBRow.swift */; };
-		9B2E8B6C275D649800B5BF53 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E8B6B275D649800B5BF53 /* ImageCache.swift */; };
 		9B2E8B6E275D65E300B5BF53 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E8B6D275D65E300B5BF53 /* Image+Extension.swift */; };
 		9B2E8B70275DD73D00B5BF53 /* NewsArticleDBDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E8B6F275DD73D00B5BF53 /* NewsArticleDBDetailView.swift */; };
 		9B2E8B73275E3A1100B5BF53 /* DBServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E8B72275E3A1100B5BF53 /* DBServices.swift */; };
@@ -36,7 +35,6 @@
 
 /* Begin PBXFileReference section */
 		9B2E8B69275D54CD00B5BF53 /* NewsArticleDBRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleDBRow.swift; sourceTree = "<group>"; };
-		9B2E8B6B275D649800B5BF53 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		9B2E8B6D275D65E300B5BF53 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
 		9B2E8B6F275DD73D00B5BF53 /* NewsArticleDBDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleDBDetailView.swift; sourceTree = "<group>"; };
 		9B2E8B72275E3A1100B5BF53 /* DBServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBServices.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				9B514612275D49C7004AC6E1 /* View+Extension.swift */,
-				9B2E8B6B275D649800B5BF53 /* ImageCache.swift */,
 				9B2E8B6D275D65E300B5BF53 /* Image+Extension.swift */,
 			);
 			path = Extension;
@@ -306,7 +303,6 @@
 				9B5145F0275D19F6004AC6E1 /* NewsResponse.swift in Sources */,
 				9B5145F1275D19F6004AC6E1 /* Article.swift in Sources */,
 				9B5145FB275D1F2C004AC6E1 /* NewsArticleDetailView.swift in Sources */,
-				9B2E8B6C275D649800B5BF53 /* ImageCache.swift in Sources */,
 				9B514608275D26DF004AC6E1 /* EmptyPlaceholderView.swift in Sources */,
 				9B51460A275D2836004AC6E1 /* NewsArticleRowView.swift in Sources */,
 				9B5145E2275D1985004AC6E1 /* Persistence.swift in Sources */,

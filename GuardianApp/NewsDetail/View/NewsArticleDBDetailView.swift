@@ -10,6 +10,7 @@ import SwiftUI
 
 struct NewsArticleDBDetailView: View {
     let dbArticle: NewsArticle
+    /// Show on web the article link
     @State var showOnWeb: Bool = false
     var body: some View {
         GeometryReader { _ in
@@ -17,25 +18,10 @@ struct NewsArticleDBDetailView: View {
                 Text("News Article Details")
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 10.0) {
-                    if let img = imageDownload() {
-                        img
-                            .resizable()
-                            .frame(minHeight: 300)
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
-                    } else {
-                        HStack {
-                            Spacer()
-                            Image(systemName: "photo")
-                                .imageScale(.large)
-                               
-                            Spacer()
-                        }
-                            .frame(minHeight: 300)
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
-                            .background(Color.gray.opacity(0.4))
-                    }
+                    ImageView(imageURL: imageURL!)
+                        .frame(minHeight: 300)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
                    
                     Text(dbArticle.webTitle ?? "")
                         .font(.headline)
@@ -71,19 +57,18 @@ struct NewsArticleDBDetailView: View {
            
     }
     
-    private func imageDownload() -> Image? {
-        if let image = ImageCache.getImageCache().get(forKey: "\(URL(string: dbArticle.fields?.thumbnail ?? "")!)") {
-            return Image(uiImage: image)
+    
+    /// Image Url
+    var imageURL: URL? {
+        guard let thumbnail = dbArticle.fields?.thumbnail else {
+            return nil
         }
-        guard let url = URL(string: dbArticle.fields?.thumbnail ?? ""),
-        let data = try? Data(contentsOf: url),
-              let img = UIImage(data: data) else {
-                  return nil
-              }
-        ImageCache.getImageCache().set(forKey: "\(url)", image: img)
-        return Image(uiImage: img)
+        return URL(string: thumbnail)
     }
+    
     fileprivate let relativeDateFormatter = RelativeDateTimeFormatter()
+    
+    /// returns the localised string based on date
     var captionText: String {
         do {
            
@@ -95,6 +80,7 @@ struct NewsArticleDBDetailView: View {
     
     }
     
+    /// Replaces all the html tags
     var descriptionText: String {
         guard let body = dbArticle.fields?.body else {
             return ""

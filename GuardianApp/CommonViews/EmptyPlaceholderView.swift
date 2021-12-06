@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/* This view is to use when no data available */
 struct EmptyPlaceholderView: View {
     
     let text: String

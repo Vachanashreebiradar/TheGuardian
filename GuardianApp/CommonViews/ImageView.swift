@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ImageView: View {
     let imageURL: URL
-    let cache = ImageCache.getImageCache()
+  
     var body: some View {
-        
+            
             AsyncImage(url: imageURL) { phase in
                 switch phase {
+                    // When no image is not available yet
                 case .empty:
                     HStack {
                         Spacer()
@@ -22,25 +23,20 @@ struct ImageView: View {
                     }
                     
                 case .success(let image):
+                    // Set The image which gets from the AsyncImage
                     image
                         .resizable()
-                        .onAppear {
-                            cache.set(forKey: "\(imageURL)", image: image.asUIImage())
-                        }
                  
                 case .failure:
-                   let img = cache.get(forKey: "\(imageURL)")
-                    if let img = img {
-                        Image(uiImage: img)
-                            .resizable()
-                    } else {
+              
+                        // Otherwise show a placeholder image
                         HStack {
                             Spacer()
                             Image(systemName: "photo")
                                 .imageScale(.large)
                             Spacer()
                         }
-                    }
+                    
                    
                     
                 @unknown default:

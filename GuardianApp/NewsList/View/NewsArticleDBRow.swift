@@ -12,26 +12,11 @@ struct NewsArticleDBRow: View {
     let dbArticle: NewsArticle
     var body: some View {
         VStack(alignment: .leading) {
-            if let img = imageDownload() {
-                img
-                    .resizable()
-                    .frame(minHeight: 300)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-            } else {
-                HStack {
-                    Spacer()
-                    Image(systemName: "photo")
-                        .imageScale(.large)
-                    Spacer()
-                }
-                    .frame(minHeight: 300)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                    .background(Color.gray.opacity(0.4))
-            }
-              
-               
+           
+            ImageView(imageURL: imageURL!)
+                .frame(minHeight: 300)
+                .cornerRadius(10)
+                .shadow(radius: 5)
             VStack(alignment: .leading, spacing: 10.0) {
                 Text(dbArticle.webTitle ?? "")
                     .font(.headline)
@@ -50,19 +35,18 @@ struct NewsArticleDBRow: View {
         .shadow(radius: 10)
     }
     
-    private func imageDownload() -> Image? {
-        if let image = ImageCache.getImageCache().get(forKey: "\(URL(string: dbArticle.fields?.thumbnail ?? "")!)") {
-            return Image(uiImage: image)
+    /// Image Url
+    var imageURL: URL? {
+        guard let thumbnail = dbArticle.fields?.thumbnail else {
+            return nil
         }
-        guard let url = URL(string: dbArticle.fields?.thumbnail ?? ""),
-        let data = try? Data(contentsOf: url),
-              let img = UIImage(data: data) else {
-                  return nil
-              }
-        ImageCache.getImageCache().set(forKey: "\(url)", image: img)
-        return Image(uiImage: img)
+        return URL(string: thumbnail)
     }
+    
+    
     fileprivate let relativeDateFormatter = RelativeDateTimeFormatter()
+    
+    /// Localised string for the given date
     var captionText: String {
         do {
            
@@ -74,6 +58,7 @@ struct NewsArticleDBRow: View {
     
     }
     
+    /// Text without HTML tags
     var descriptionText: String {
         guard let body = dbArticle.fields?.body else {
             return ""

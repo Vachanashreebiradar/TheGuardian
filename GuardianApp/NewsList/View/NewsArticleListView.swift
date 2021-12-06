@@ -10,13 +10,19 @@ import CoreData
 
 
 struct NewsArticleListView: View {
+    /// View Model instance
     @StateObject var articleNewsVM = NewsArticleViewModel(networkManager: NetworkManager.shared)
    
+    /// NewsArticle fetched results
     @FetchRequest(entity: NewsArticle.entity(), sortDescriptors: [NSSortDescriptor(key: "webPublicationDate", ascending: false)], animation: .default) var results: FetchedResults<NewsArticle>
+    /// NSManagedContext
     @Environment(\.managedObjectContext) var context
+    
+    let timer = Timer.publish(every: 60, tolerance: 5, on: .main, in: .common).autoconnect()
     var body: some View {
       
             ZStack {
+                /// Load this view when no data in db
                 if results.isEmpty {
                     List {
                         ForEach(articleNewsVM.articles) { article in
@@ -39,7 +45,7 @@ struct NewsArticleListView: View {
                     }
                     .listStyle(.plain)
                 } else {
-                    
+                    /// Load this view when there is data in db
                     List {
                         ForEach(results) { article in
                             ZStack {
@@ -69,8 +75,13 @@ struct NewsArticleListView: View {
             .refreshable {
                     articleNewsVM.fetchNewsAPI(context: context)
             }
+            .onReceive(timer) { _ in
+                articleNewsVM.fetchNewsAPI(context: context)
+            }
             
     }
+    
+    /// Placeholders when no data
     @ViewBuilder
     private var overlayView: some View {
         

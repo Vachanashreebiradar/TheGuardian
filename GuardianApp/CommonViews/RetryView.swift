@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/* This view is to use when failed fetch data */
 struct RetryView: View {
     
     let text: String

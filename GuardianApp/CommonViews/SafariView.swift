@@ -8,6 +8,7 @@
 import SwiftUI
 import SafariServices
 
+/* This view is to use when to open any view in safari */
 struct SafariView: UIViewControllerRepresentable {
     
     let url: URL

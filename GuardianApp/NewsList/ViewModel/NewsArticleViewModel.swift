@@ -24,6 +24,7 @@ class NewsArticleViewModel: ObservableObject {
     
     var disposeBag = Set<AnyCancellable>()
     
+    /// The api articles
      var articles: [Article] {
         if case let .success(articles) = phase {
             return articles
@@ -33,14 +34,15 @@ class NewsArticleViewModel: ObservableObject {
     }
     @Published var phase = DataFetchPhase<[Article]>.empty
     
+    // MARK: Initialiser
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-       
     }
     
     
     
     func fetchNewsAPI(context: NSManagedObjectContext) {
+        /// Set Empty View first
         self.phase = .empty
         networkManager.getData(from: "Afghanistan", fields: ["body","thumbnail"], orderBy: .newest, responseType: NewsResponse.self)
             .sink { [unowned self] com in
@@ -52,6 +54,7 @@ class NewsArticleViewModel: ObservableObject {
                 }
             } receiveValue: { [unowned self] newsResponse in
                 phase = .success(newsResponse.response.results ?? [])
+                /// load all db articles
                 let savedArticles =  dbServicesManager.loadDBData(context: context)
                 if savedArticles.count > 0 {
                     var newArticles: [Article] = []
@@ -62,10 +65,12 @@ class NewsArticleViewModel: ObservableObject {
                             newArticles.append(article)
                         }
                     }
+                    /// Filter all the new articles which needs to save in the DB
                     if newArticles.count > 0 {
                         dbServicesManager.saveData(articles: newArticles, context: context)
                     }
                 } else {
+                    /// No previous db data then save all
                     dbServicesManager.saveData(articles: articles, context: context)
                 }
                
